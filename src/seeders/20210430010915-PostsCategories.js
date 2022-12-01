@@ -1,3 +1,4 @@
+// Post categories table seeder
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     await queryInterface.bulkInsert('posts_categories',
