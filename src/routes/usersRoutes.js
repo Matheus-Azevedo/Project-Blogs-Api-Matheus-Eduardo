@@ -13,6 +13,9 @@ const usersRouter = express.Router();
 // GET /users
 usersRouter.get('/', validateToken, userController.getAllUsers);
 
+// GET /users/:id
+usersRouter.get('/:id', validateToken, userController.getUserById);
+
 // POST /users
 usersRouter.post('/',
   dispplayNameValidation,

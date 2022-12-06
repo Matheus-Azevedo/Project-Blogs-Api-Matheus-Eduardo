@@ -12,6 +12,19 @@ const getAllUsers = async (_req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userService.getUserById(id);
+    if (!user) {
+      return res.status(status.findStatus('NOT_FOUND')).json({ message: 'User does not exist' });
+    }
+    return res.status(status.findStatus('REQUEST_OK')).json(user);
+  } catch (error) {
+    return res.status(status.findStatus('INTERNAL_SERVER_ERROR')).json({ message: error.message });
+  }
+};
+
 const createUser = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
@@ -25,5 +38,6 @@ const createUser = async (req, res) => {
 
 module.exports = {
   getAllUsers,
+  getUserById,
   createUser,
 };
