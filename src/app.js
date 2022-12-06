@@ -2,8 +2,6 @@ const express = require('express');
 const loginRouter = require('./routes/loginRoutes');
 const usersRouter = require('./routes/usersRoutes');
 
-// Commit
-
 const app = express();
 app.use(express.json());
 
