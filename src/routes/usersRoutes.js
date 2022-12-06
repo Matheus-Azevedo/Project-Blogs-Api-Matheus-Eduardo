@@ -1,4 +1,5 @@
 const express = require('express');
+const { validateToken } = require('../authentication/JWT');
 const userController = require('../controllers/user.controller');
 const { 
   dispplayNameValidation, 
@@ -8,6 +9,9 @@ const {
 
 // Router instance
 const usersRouter = express.Router();
+
+// GET /users
+usersRouter.get('/', validateToken, userController.getAllUsers);
 
 // POST /users
 usersRouter.post('/',

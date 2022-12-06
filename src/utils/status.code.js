@@ -4,6 +4,7 @@ const statusCode = {
   REQUEST_CREATED: 201,
   INTERNAL_SERVER_ERROR: 500,
   CONFLICT: 409,
+  UNAUTHORIZED: 401,
 };
 
 const findStatus = (type) => statusCode[type];

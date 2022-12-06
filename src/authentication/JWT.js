@@ -1,6 +1,5 @@
-// src/auth/validateJWT.js
 const jwt = require('jsonwebtoken');
-
+const status = require('../utils/status.code'); 
 require('dotenv/config');
 
 // Secret key
@@ -25,7 +24,24 @@ const verifyToken = async (authorization) => {
   }
 };
 
+const validateToken = async (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return res
+      .status(status.findStatus('UNAUTHORIZED'))
+      .json({ message: 'Token not found' });
+  }
+  const payLoad = await verifyToken(authorization);
+  if (payLoad.isError) {
+    return res
+      .status(status.findStatus('UNAUTHORIZED'))
+      .json({ message: 'Expired or invalid token' });
+  }
+  next();
+};
+
 module.exports = {
   createToken,
   verifyToken,
+  validateToken,
 };
