@@ -7,7 +7,7 @@ const login = async (req, res) => {
     const token = createToken(email);
     return res.status(status.findStatus('REQUEST_OK')).json({ token });
   } catch (error) {
-    return res.status(status.findStatus('BAD_REQUEST')).json({ message: error.message });
+    return res.status(status.findStatus('INTERNAL_SERVER_ERROR')).json({ message: error.message });
   }
 };
 
