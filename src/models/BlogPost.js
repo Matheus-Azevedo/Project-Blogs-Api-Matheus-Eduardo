@@ -21,14 +21,14 @@ module.exports = (sequelize, DataTypes) => {
       onDelete : 'CASCADE',
     },
     published: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: true,
+      defaultValue: DataTypes.NOW,
     },
     updated: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: sequelize.fn('NOW'),
+      defaultValue: DataTypes.NOW,
     },
   }, {
     timestamps: false,

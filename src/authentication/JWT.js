@@ -10,8 +10,8 @@ const jwtConfig = {
   expiresIn: '30min',
 };
 
-const createToken = (userEmail) => {
-  const token = jwt.sign({ data: userEmail }, secret, jwtConfig);
+const createToken = (userData) => {
+  const token = jwt.sign({ data: userData }, secret, jwtConfig);
   return token;
 };
 
@@ -37,6 +37,7 @@ const validateToken = async (req, res, next) => {
       .status(status.findStatus('UNAUTHORIZED'))
       .json({ message: 'Expired or invalid token' });
   }
+  req.user = payLoad.data;
   next();
 };
 

@@ -1,10 +1,10 @@
 const status = require('../utils/status.code');
-const { createToken } = require('../authentication/JWT');
+const loginService = require('../services/login.services');
 
 const login = async (req, res) => {
   try {
-    const { email } = req.body;
-    const token = createToken(email);
+    const { email, password } = req.body;
+    const token = await loginService.login(email, password);
     return res.status(status.findStatus('REQUEST_OK')).json({ token });
   } catch (error) {
     return res.status(status.findStatus('INTERNAL_SERVER_ERROR')).json({ message: error.message });
