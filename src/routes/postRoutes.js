@@ -9,6 +9,9 @@ const postRouter = express.Router();
 // GET /post
 postRouter.get('/', validateToken, postController.getAllPosts);
 
+// GET /post/:id
+postRouter.get('/:id', validateToken, postController.getPostById);
+
 // POST /post
 postRouter.post('/',
   validateToken,

@@ -10,6 +10,19 @@ const getAllPosts = async (_req, res) => {
   }
 };
 
+const getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await postService.getPostById(id);
+    if (!post) {
+      return res.status(status.findStatus('NOT_FOUND')).json({ message: 'Post does not exist' });
+    }
+    res.status(status.findStatus('REQUEST_OK')).json(post);
+  } catch (error) {
+    res.status(status.findStatus('INTERNAL_SERVER_ERROR')).json({ message: error.message });
+  }
+};
+
 const createPost = async (req, res) => {
   try {
     const { title, content, categoryIds } = req.body;
@@ -23,5 +36,6 @@ const createPost = async (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getPostById,
   createPost,
 };
