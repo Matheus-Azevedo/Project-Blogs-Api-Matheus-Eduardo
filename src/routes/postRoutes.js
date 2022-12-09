@@ -6,6 +6,9 @@ const { categoryIdsValidation, allFielsPostValidation } = require('../middleware
 // Router instance
 const postRouter = express.Router();
 
+// GET /post
+postRouter.get('/', validateToken, postController.getAllPosts);
+
 // POST /post
 postRouter.post('/',
   validateToken,
