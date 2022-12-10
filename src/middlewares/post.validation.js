@@ -24,7 +24,18 @@ const categoryIdsValidation = async (req, res, next) => {
   next();
 };
 
+const updatePostValidation = async (req, res, next) => {
+  const { title, content } = req.body;
+  if (!title && !content) {
+    return res
+      .status(status.findStatus('BAD_REQUEST'))
+      .json({ message: 'Some required fields are missing' });
+  }
+  next();
+};
+
 module.exports = {
   allFielsPostValidation,
   categoryIdsValidation,
+  updatePostValidation,
 };

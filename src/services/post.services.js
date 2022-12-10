@@ -60,8 +60,25 @@ const createPost = async (title, content, userId, categoryIds) => {
   }
 };
 
+const updatePost = async (id, title, content, userId) => {
+  const post = await BlogPost.findOne({ where: { id } });
+  if (post.dataValues.userId !== userId) {
+    return { message: 'Unauthorized user' };
+  }
+  await BlogPost.update({ title, content }, { where: { id } });
+  const updatedPost = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return updatedPost;
+};
+
 module.exports = {
   getAllPosts,
   getPostById,
   createPost,
+  updatePost,
 };

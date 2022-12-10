@@ -34,8 +34,27 @@ const createPost = async (req, res) => {
   }
 };
 
+const updatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const { id: userId } = req.user;
+    const post = await postService.updatePost(id, title, content, userId);
+    if (!post) {
+      return res.status(status.findStatus('NOT_FOUND')).json({ message: 'Post does not exist' });
+    }
+    if (post.message) {
+      return res.status(status.findStatus('UNAUTHORIZED')).json({ message: post.message });
+    }
+    res.status(status.findStatus('REQUEST_OK')).json(post);
+  } catch (error) {
+    res.status(status.findStatus('INTERNAL_SERVER_ERROR')).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllPosts,
   getPostById,
   createPost,
+  updatePost,
 };

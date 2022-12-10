@@ -6,6 +6,7 @@ const statusCode = {
   CONFLICT: 409,
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
+  FORBIDDEN: 403,
 };
 
 const findStatus = (type) => statusCode[type];
