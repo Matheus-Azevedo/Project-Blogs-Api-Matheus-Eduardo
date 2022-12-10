@@ -23,6 +23,17 @@ const getPostById = async (req, res) => {
   }
 };
 
+const getPostBySearchTerm = async (req, res) => {
+  try {
+    const { q: searchTerm } = req.query;
+    const posts = await postService.getPostBySearchTerm(searchTerm);
+    if (!posts) return res.status(status.findStatus('REQUEST_OK')).json({ message: [] });
+    res.status(status.findStatus('REQUEST_OK')).json(posts);
+  } catch (error) {
+    res.status(status.findStatus('INTERNAL_SERVER_ERROR')).json({ message: error.message });
+  }
+};
+
 const createPost = async (req, res) => {
   try {
     const { title, content, categoryIds } = req.body;
@@ -60,6 +71,7 @@ const deletePost = async (req, res) => {
 module.exports = {
   getAllPosts,
   getPostById,
+  getPostBySearchTerm,
   createPost,
   updatePost,
   deletePost,

@@ -15,6 +15,9 @@ const postRouter = express.Router();
 // GET /post
 postRouter.get('/', validateToken, postController.getAllPosts);
 
+// GET /post/search?q=:searchTerm
+postRouter.get('/search', validateToken, postController.getPostBySearchTerm);
+
 // GET /post/:id
 postRouter.get('/:id', validateToken, postController.getPostById);
 
