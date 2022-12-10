@@ -7,6 +7,7 @@ const statusCode = {
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
   FORBIDDEN: 403,
+  DELETED: 204,
 };
 
 const findStatus = (type) => statusCode[type];

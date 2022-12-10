@@ -1,5 +1,6 @@
 const status = require('../utils/status.code');
 const categoriesService = require('../services/categories.services');
+const postService = require('../services/post.services');
 
 const allFielsPostValidation = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
@@ -34,8 +35,31 @@ const updatePostValidation = async (req, res, next) => {
   next();
 };
 
+const postExistsValidation = async (req, res, next) => {
+  const { id } = req.params;
+  const post = await postService.getPostById(id);
+  if (!post) {
+    return res.status(status.findStatus('NOT_FOUND')).json({ message: 'Post does not exist' });
+  }
+  next();
+};
+
+const postUnauthorizedValidation = async (req, res, next) => {
+  const { id } = req.params;
+  const { id: userId } = req.user;
+  const post = await postService.getPostById(id);
+  if (post.user.id !== userId) {
+    return res
+      .status(status.findStatus('UNAUTHORIZED'))
+      .json({ message: 'Unauthorized user' });
+  }
+  next();
+};
+
 module.exports = {
   allFielsPostValidation,
   categoryIdsValidation,
   updatePostValidation,
+  postExistsValidation,
+  postUnauthorizedValidation,
 };

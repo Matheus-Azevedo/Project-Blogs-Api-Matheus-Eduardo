@@ -60,11 +60,7 @@ const createPost = async (title, content, userId, categoryIds) => {
   }
 };
 
-const updatePost = async (id, title, content, userId) => {
-  const post = await BlogPost.findOne({ where: { id } });
-  if (post.dataValues.userId !== userId) {
-    return { message: 'Unauthorized user' };
-  }
+const updatePost = async (id, title, content) => {
   await BlogPost.update({ title, content }, { where: { id } });
   const updatedPost = await BlogPost.findOne({
     where: { id },
@@ -76,9 +72,14 @@ const updatePost = async (id, title, content, userId) => {
   return updatedPost;
 };
 
+const deletePost = async (id) => {
+  await BlogPost.destroy({ where: { id } });
+};
+
 module.exports = {
   getAllPosts,
   getPostById,
   createPost,
   updatePost,
+  deletePost,
 };

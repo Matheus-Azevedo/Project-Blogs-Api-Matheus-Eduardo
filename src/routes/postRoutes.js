@@ -5,6 +5,8 @@ const {
   categoryIdsValidation,
   allFielsPostValidation, 
   updatePostValidation,
+  postExistsValidation,
+  postUnauthorizedValidation,
 } = require('../middlewares/post.validation');
 
 // Router instance
@@ -17,7 +19,12 @@ postRouter.get('/', validateToken, postController.getAllPosts);
 postRouter.get('/:id', validateToken, postController.getPostById);
 
 // PUT /post/:id
-postRouter.put('/:id', validateToken, updatePostValidation, postController.updatePost);
+postRouter.put('/:id',
+  validateToken,
+  updatePostValidation,
+  postExistsValidation,
+  postUnauthorizedValidation,
+  postController.updatePost);
 
 // POST /post
 postRouter.post('/',
@@ -25,5 +32,12 @@ postRouter.post('/',
   allFielsPostValidation,
   categoryIdsValidation,
   postController.createPost);
+
+// DELETE /post/:id
+postRouter.delete('/:id',
+  validateToken,
+  postExistsValidation,
+  postUnauthorizedValidation,
+  postController.deletePost);
 
 module.exports = postRouter;
