@@ -36,8 +36,19 @@ const createUser = async (req, res) => {
   }
 };
 
+const deleteMyUser = async (req, res) => {
+  try {
+    const { id } = req.user;
+    await userService.deleteMyUser(id);
+    return res.status(status.findStatus('DELETED')).json();
+  } catch (error) {
+    return res.status(status.findStatus('INTERNAL_SERVER_ERROR')).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
   createUser,
+  deleteMyUser,
 };

@@ -10,17 +10,20 @@ const {
 // Router instance
 const usersRouter = express.Router();
 
-// GET /users
+// GET /user
 usersRouter.get('/', validateToken, userController.getAllUsers);
 
-// GET /users/:id
+// GET /user/:id
 usersRouter.get('/:id', validateToken, userController.getUserById);
 
-// POST /users
+// POST /user
 usersRouter.post('/',
   dispplayNameValidation,
   emailValidation,
   passwordValidation,
   userController.createUser);
+
+// DELETE /user/me
+usersRouter.delete('/:id', validateToken, userController.deleteMyUser);
 
 module.exports = usersRouter;
